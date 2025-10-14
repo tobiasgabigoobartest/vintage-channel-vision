@@ -1,0 +1,178 @@
+import { useState } from "react";
+import { Power, Volume2, VolumeX } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const channels = [
+  { id: 1, name: "Test Pattern", color: "from-tv-screen-glow/20 to-purple-500/20" },
+  { id: 2, name: "Color Bars", color: "from-red-500/30 via-green-500/30 to-blue-500/30" },
+  { id: 3, name: "Static", color: "from-gray-500/40 to-gray-700/40" },
+];
+
+export const VintageTV = () => {
+  const [isPoweredOn, setIsPoweredOn] = useState(true);
+  const [currentChannel, setCurrentChannel] = useState(0);
+  const [volume, setVolume] = useState(50);
+  const [isMuted, setIsMuted] = useState(false);
+
+  const handleChannelChange = () => {
+    setCurrentChannel((prev) => (prev + 1) % channels.length);
+  };
+
+  const handleVolumeChange = (delta: number) => {
+    setVolume((prev) => Math.max(0, Math.min(100, prev + delta)));
+  };
+
+  return (
+    <div className="relative w-full max-w-4xl mx-auto p-8">
+      {/* TV Body */}
+      <div className="relative bg-gradient-to-br from-tv-wood-dark via-tv-wood-grain to-tv-wood-light rounded-3xl shadow-2xl p-8 border-4 border-tv-wood-dark">
+        {/* Wood grain texture overlay */}
+        <div className="absolute inset-0 rounded-3xl opacity-30 bg-[repeating-linear-gradient(90deg,transparent,transparent_2px,hsl(var(--tv-wood-grain))_2px,hsl(var(--tv-wood-grain))_4px)]" />
+        
+        {/* Brand plate */}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-tv-metal px-6 py-2 rounded shadow-lg border border-tv-metal/50">
+          <p className="text-foreground/80 font-bold text-sm tracking-widest">RETRO-VISION</p>
+        </div>
+
+        {/* Screen Container */}
+        <div className="relative bg-tv-screen-bg rounded-2xl p-6 shadow-inner mt-8">
+          {/* Screen bezel */}
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-tv-metal/50 to-transparent pointer-events-none" />
+          
+          {/* Screen */}
+          <div className="relative aspect-[4/3] bg-tv-screen-bg rounded-lg overflow-hidden border-4 border-black/50">
+            {isPoweredOn ? (
+              <>
+                {/* Screen content */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${channels[currentChannel].color}`}>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <h2 className="text-tv-text text-6xl font-bold mb-4 drop-shadow-[0_0_10px_hsl(var(--tv-screen-glow))]">
+                        {channels[currentChannel].name}
+                      </h2>
+                      <p className="text-tv-text/70 text-2xl">Channel {channels[currentChannel].id}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Scanlines */}
+                <div className="absolute inset-0 pointer-events-none bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.3)_2px,rgba(0,0,0,0.3)_4px)]" />
+                
+                {/* Animated scanline */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                  <div className="w-full h-32 bg-gradient-to-b from-transparent via-white/10 to-transparent animate-scanline" />
+                </div>
+
+                {/* Vignette */}
+                <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle,transparent_0%,rgba(0,0,0,0.7)_100%)]" />
+                
+                {/* Screen curvature simulation */}
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-white/5 via-transparent to-black/20 rounded-lg" />
+
+                {/* Flicker effect */}
+                <div className="absolute inset-0 pointer-events-none bg-tv-screen-glow/5 animate-flicker" />
+              </>
+            ) : (
+              <div className="absolute inset-0 bg-tv-screen-bg" />
+            )}
+          </div>
+        </div>
+
+        {/* Control Panel */}
+        <div className="mt-8 flex items-center justify-between px-4">
+          {/* Left Controls */}
+          <div className="flex items-center gap-6">
+            {/* Power Button */}
+            <Button
+              onClick={() => setIsPoweredOn(!isPoweredOn)}
+              className={`w-16 h-16 rounded-full ${
+                isPoweredOn
+                  ? "bg-tv-button shadow-[0_0_10px_hsl(var(--tv-button))]"
+                  : "bg-tv-metal"
+              } hover:scale-105 transition-transform`}
+            >
+              <Power className="w-6 h-6 text-foreground" />
+            </Button>
+
+            {/* Volume Control */}
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-xs text-foreground/60 uppercase tracking-wider">Volume</p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setIsMuted(!isMuted)}
+                  className="w-10 h-10 rounded-full bg-tv-dial flex items-center justify-center hover:scale-105 transition-transform"
+                >
+                  {isMuted ? (
+                    <VolumeX className="w-4 h-4 text-foreground" />
+                  ) : (
+                    <Volume2 className="w-4 h-4 text-foreground" />
+                  )}
+                </button>
+                <div
+                  className="relative w-24 h-24 rounded-full bg-tv-dial shadow-lg cursor-pointer group"
+                  onClick={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    handleVolumeChange(y > 0 ? -10 : 10);
+                  }}
+                >
+                  <div className="absolute inset-2 rounded-full bg-gradient-to-br from-tv-wood-light/30 to-tv-wood-dark/30" />
+                  <div
+                    className="absolute top-1/2 left-1/2 w-1 h-8 bg-foreground/80 rounded-full origin-bottom transition-transform"
+                    style={{
+                      transform: `translate(-50%, -100%) rotate(${(volume - 50) * 1.8}deg)`,
+                    }}
+                  />
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-xs text-foreground/60">
+                    {isMuted ? "MUTE" : volume}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Center Speakers */}
+          <div className="flex gap-2">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="w-1 h-12 bg-tv-metal/50 rounded-full"
+                style={{ height: `${Math.random() * 32 + 16}px` }}
+              />
+            ))}
+          </div>
+
+          {/* Right Controls */}
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-xs text-foreground/60 uppercase tracking-wider">Channel</p>
+            <div
+              className="relative w-24 h-24 rounded-full bg-tv-dial shadow-lg cursor-pointer group hover:scale-105 transition-transform"
+              onClick={handleChannelChange}
+            >
+              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-tv-wood-light/30 to-tv-wood-dark/30" />
+              <div
+                className="absolute top-1/2 left-1/2 w-1 h-8 bg-foreground/80 rounded-full origin-bottom transition-transform duration-300"
+                style={{
+                  transform: `translate(-50%, -100%) rotate(${currentChannel * 120}deg)`,
+                }}
+              />
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-xs text-foreground/60">
+                {channels[currentChannel].id}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Antenna */}
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-2 h-32 bg-tv-metal rounded-full shadow-lg">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-tv-metal rounded-full origin-left rotate-[-35deg]" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-tv-metal rounded-full origin-right rotate-[35deg]" />
+        </div>
+
+        {/* Feet */}
+        <div className="absolute -bottom-2 left-16 w-20 h-4 bg-tv-wood-dark rounded-b-lg shadow-lg" />
+        <div className="absolute -bottom-2 right-16 w-20 h-4 bg-tv-wood-dark rounded-b-lg shadow-lg" />
+      </div>
+    </div>
+  );
+};

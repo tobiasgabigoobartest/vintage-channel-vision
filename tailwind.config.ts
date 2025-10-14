@@ -47,15 +47,20 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+        tv: {
+          wood: {
+            dark: "hsl(var(--tv-wood-dark))",
+            light: "hsl(var(--tv-wood-light))",
+            grain: "hsl(var(--tv-wood-grain))",
+          },
+          screen: {
+            bg: "hsl(var(--tv-screen-bg))",
+            glow: "hsl(var(--tv-screen-glow))",
+          },
+          metal: "hsl(var(--tv-metal))",
+          dial: "hsl(var(--tv-dial))",
+          button: "hsl(var(--tv-button))",
+          text: "hsl(var(--tv-text))",
         },
       },
       borderRadius: {
@@ -80,10 +85,37 @@ export default {
             height: "0",
           },
         },
+        "scanline": {
+          "0%": {
+            transform: "translateY(-100%)",
+          },
+          "100%": {
+            transform: "translateY(100%)",
+          },
+        },
+        "flicker": {
+          "0%, 100%": {
+            opacity: "1",
+          },
+          "50%": {
+            opacity: "0.97",
+          },
+        },
+        "static-noise": {
+          "0%, 100%": {
+            backgroundPosition: "0% 0%",
+          },
+          "50%": {
+            backgroundPosition: "100% 100%",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "scanline": "scanline 8s linear infinite",
+        "flicker": "flicker 0.15s infinite",
+        "static-noise": "static-noise 0.2s infinite",
       },
     },
   },
