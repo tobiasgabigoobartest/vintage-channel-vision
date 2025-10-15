@@ -27,6 +27,13 @@ const channels = [
     gradient: "from-orange-500 via-red-500 to-pink-600",
     pattern: "repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(0,0,0,0.2) 10px, rgba(0,0,0,0.2) 20px), repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(0,0,0,0.2) 10px, rgba(0,0,0,0.2) 20px)"
   },
+  { 
+    id: 5, 
+    name: "🎬 MOVIE NIGHT", 
+    gradient: "from-slate-900 via-slate-800 to-slate-900",
+    pattern: "linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.8) 100%)",
+    isMovie: true
+  },
 ];
 
 export const VintageTV = () => {
@@ -65,21 +72,38 @@ export const VintageTV = () => {
             {isPoweredOn ? (
               <>
                 {/* Screen content */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${channels[currentChannel].gradient} animate-pulse`}>
+                <div className={`absolute inset-0 bg-gradient-to-br ${channels[currentChannel].gradient} ${channels[currentChannel].isMovie ? '' : 'animate-pulse'}`}>
                   <div 
                     className="absolute inset-0 opacity-30"
                     style={{ backgroundImage: channels[currentChannel].pattern }}
                   />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center animate-bounce">
-                      <h2 className="text-white text-6xl font-bold mb-4 drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] animate-pulse">
-                        {channels[currentChannel].name}
-                      </h2>
-                      <p className="text-white/90 text-3xl font-bold drop-shadow-lg">
-                        Channel {channels[currentChannel].id}
-                      </p>
+                  {channels[currentChannel].isMovie ? (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-white">
+                      <div className="text-center space-y-8 max-w-2xl">
+                        <h1 className="text-5xl font-bold tracking-wider">THE RETRO CHRONICLES</h1>
+                        <p className="text-2xl italic opacity-90">"In a world of pixels and dreams..."</p>
+                        <div className="space-y-4 text-lg text-left bg-black/40 p-6 rounded">
+                          <p>🎭 A mysterious developer discovers</p>
+                          <p>⚡ A magical vintage television</p>
+                          <p>🌟 That brings code to life</p>
+                        </div>
+                        <p className="text-3xl font-bold animate-pulse">▶ NOW PLAYING</p>
+                      </div>
+                      {/* Film grain effect */}
+                      <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii45Ii8+PGZlQ29sb3JNYXRyaXggdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuNSAwIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2EpIi8+PC9zdmc+')] animate-static-noise" />
                     </div>
-                  </div>
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center animate-bounce">
+                        <h2 className="text-white text-6xl font-bold mb-4 drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] animate-pulse">
+                          {channels[currentChannel].name}
+                        </h2>
+                        <p className="text-white/90 text-3xl font-bold drop-shadow-lg">
+                          Channel {channels[currentChannel].id}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Scanlines */}
