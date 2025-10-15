@@ -3,9 +3,30 @@ import { Power, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const channels = [
-  { id: 1, name: "Test Pattern", color: "from-tv-screen-glow/20 to-purple-500/20" },
-  { id: 2, name: "Color Bars", color: "from-red-500/30 via-green-500/30 to-blue-500/30" },
-  { id: 3, name: "Static", color: "from-gray-500/40 to-gray-700/40" },
+  { 
+    id: 1, 
+    name: "🎮 RETRO ARCADE", 
+    gradient: "from-pink-500 via-purple-500 to-cyan-500",
+    pattern: "repeating-radial-gradient(circle at 50% 50%, transparent 0, rgba(255,0,255,0.3) 10px, transparent 20px)"
+  },
+  { 
+    id: 2, 
+    name: "🌈 NEON DREAMS", 
+    gradient: "from-yellow-400 via-red-500 to-pink-500",
+    pattern: "repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px)"
+  },
+  { 
+    id: 3, 
+    name: "✨ COSMIC WAVES", 
+    gradient: "from-cyan-400 via-blue-500 to-purple-600",
+    pattern: "repeating-conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,0.2) 15deg, transparent 30deg)"
+  },
+  { 
+    id: 4, 
+    name: "🔥 PIXEL PARTY", 
+    gradient: "from-orange-500 via-red-500 to-pink-600",
+    pattern: "repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(0,0,0,0.2) 10px, rgba(0,0,0,0.2) 20px), repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(0,0,0,0.2) 10px, rgba(0,0,0,0.2) 20px)"
+  },
 ];
 
 export const VintageTV = () => {
@@ -30,8 +51,8 @@ export const VintageTV = () => {
         <div className="absolute inset-0 rounded-3xl opacity-30 bg-[repeating-linear-gradient(90deg,transparent,transparent_2px,hsl(var(--tv-wood-grain))_2px,hsl(var(--tv-wood-grain))_4px)]" />
         
         {/* Brand plate */}
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-tv-metal px-6 py-2 rounded shadow-lg border border-tv-metal/50">
-          <p className="text-foreground/80 font-bold text-sm tracking-widest">RETRO-VISION</p>
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-tv-button to-tv-dial px-6 py-2 rounded-lg shadow-2xl border-2 border-tv-screen-glow/50 animate-pulse">
+          <p className="text-white font-bold text-lg tracking-widest drop-shadow-lg">✨ FUNKY-VISION ✨</p>
         </div>
 
         {/* Screen Container */}
@@ -44,13 +65,19 @@ export const VintageTV = () => {
             {isPoweredOn ? (
               <>
                 {/* Screen content */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${channels[currentChannel].color}`}>
+                <div className={`absolute inset-0 bg-gradient-to-br ${channels[currentChannel].gradient} animate-pulse`}>
+                  <div 
+                    className="absolute inset-0 opacity-30"
+                    style={{ backgroundImage: channels[currentChannel].pattern }}
+                  />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <h2 className="text-tv-text text-6xl font-bold mb-4 drop-shadow-[0_0_10px_hsl(var(--tv-screen-glow))]">
+                    <div className="text-center animate-bounce">
+                      <h2 className="text-white text-6xl font-bold mb-4 drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] animate-pulse">
                         {channels[currentChannel].name}
                       </h2>
-                      <p className="text-tv-text/70 text-2xl">Channel {channels[currentChannel].id}</p>
+                      <p className="text-white/90 text-3xl font-bold drop-shadow-lg">
+                        Channel {channels[currentChannel].id}
+                      </p>
                     </div>
                   </div>
                 </div>

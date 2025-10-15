@@ -38,16 +38,16 @@ All colors MUST be HSL.
 
     --radius: 0.3rem;
 
-    /* Vintage TV specific tokens */
-    --tv-wood-dark: 25 60% 25%;
-    --tv-wood-light: 30 50% 40%;
-    --tv-wood-grain: 25 55% 30%;
-    --tv-screen-bg: 0 0% 8%;
-    --tv-screen-glow: 45 100% 60%;
-    --tv-metal: 0 0% 40%;
-    --tv-dial: 35 45% 35%;
-    --tv-button: 0 60% 50%;
-    --tv-text: 45 80% 70%;
+    /* Vintage TV specific tokens - Fun & Vibrant! */
+    --tv-wood-dark: 280 50% 35%;
+    --tv-wood-light: 320 60% 50%;
+    --tv-wood-grain: 300 55% 40%;
+    --tv-screen-bg: 200 80% 10%;
+    --tv-screen-glow: 180 100% 50%;
+    --tv-metal: 200 30% 50%;
+    --tv-dial: 340 70% 55%;
+    --tv-button: 330 100% 60%;
+    --tv-text: 180 100% 80%;
   }
 }
 
